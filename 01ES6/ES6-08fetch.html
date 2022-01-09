@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>fetch()함수 사용하기</h2>
+    <!-- 
+        fetch()함수
+            : ajax()함수처럼 비동기 통신을 지원하는 함수로
+            요청에 성공하면 프로미스 객체를 반환한다.
+     -->
+    <script>
+    let url = "http://nakja.co.kr/kosmoAPI/json/board_list_json.php";
+    fetch(url)
+        .then(function(resData){
+            //여기서 반환한 값은 다음 then절로 전달된다.
+            return resData.json();
+        })
+        .then((data)=>{
+            //앞의 then절에서 전달한 값을 콘솔에 출력
+            console.log(data);
+        })
+        .catch(function(errData){
+            //요청에 실패한 경우 catch절로 콜백데이터 전달
+            console.log(errData);
+        });
+    </script>
+</body>
+</html>

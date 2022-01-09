@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+    ECMA(European Computer Manufacturers Association) Script 2015
+        : ECMA Script 자바스크립트 표준단체에서 제정한 표준안
+        현재 우리가 사용하고 있는 JS는 주로 ES5며, 최신은 ES6이다.
+        ES1~ES3까지 존재하고, ES4는 논쟁요소가 많아 폐기되었으며
+        ES5부터 다시 제정하였다
+     -->
+    <h2>ES6(ECMA Script 2015)</h2>
+    <script>
+        /*
+        변수의 선언
+        const : 상수로 선언할 때 사용한다. 값을 바꿀 수 없다.
+        let : 일반적인 변수로 선언할 때 사용한다. var와 동일하다
+        */
+        const num = 100; //상수선언
+        //start~end까지 더하는 함수 
+        let sumLimit = function(start, end){
+            let sum = 0;
+            for(var i=start; i<=end ; i++){
+                sum += i;
+            }
+            return sum;
+        }
+        let result = sumLimit(1, 10);
+        console.log("변수 result="+result);
+        console.log("변수 num="+num);
+        // num = 200; //상수이므로 값을 재설정할 수 없다.
+
+        console.log('=====================')
+
+        /*
+        블럭의 유효범위(Block Scope)
+        기존 JS에서의 범위
+            : 변수의 유효범위는 블럭단위로 제한되지 않아 처음에 생성된 변수 a는
+            for문안에서 값만 1로변경되는 형태가 되고 종료시점에 출력하면 for문의
+            a가 출력된다.
+        */
+        var a = 10; //전역변수로 선언되었지만...
+        for(var a=1; a<=10; a++){
+            console.log('for문안의 a='+a); //for문 안에서 값만 1~10까지 재설정한 후..
+        }
+        console.log('for문밖의 a='+a);//11이 출력된다.
+
+        console.log('=====================')
+        /*
+        ES6에서의 Scope
+            : 키워드 let은 블럭내에서 유효범위를 가지게 되므로 변수 b는
+            전역변수가 된다. 그리고 for문안에서 선언된 변수 b는 지역변수가
+            되어 지역을 벗어나면 소멸된다. 따라서 Java와 동일한 범위를
+            가지게 된다.
+        */
+        let b = 10;
+        for(let b=1; b<=10; b++){
+            console.log('for문안의 b='+b); //1~10까지 출력되고,,
+            let ball = "야구공";
+        }
+        console.log('for문밖의 b='+b); //지역변수가 소멸되어 전역변수 10이 출력
+        console.log('ball(if문 이후)='+ball);//for문의 지역변수이므로 에러발생
+    </script>
+</body>
+</html>

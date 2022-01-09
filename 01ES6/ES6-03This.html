@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>this - 화살표함수(ES6의 ArrowFunction)를 사용할 때</h2>
+    <h3>누가 호출하던 상관없이 Car개체를 가져오게 된다.</h3>
+    <button id="btn2">클릭하세요</button>
+    <p id="myDiv2"></p>
+    <script>
+        class Car{
+            constructor() {
+                this.color = "빨간색 스포츠카";
+            }
+            //멤버함수를 화살표 함수로 선언하면...
+            changeColor = () => {
+                /*
+                this를 사용했을 때 항상 Car객체를 가리키게 되므로
+                아래 두개의 문장모두를 사용할 수 있다.
+                */
+                document.getElementById("myDiv2").innerHTML += this.color;
+                document.getElementById("myDiv2").innerHTML += this;
+            }
+        }
+        myCar = new Car();
+
+        window.addEventListener("load", myCar.changeColor);
+        document.getElementById("btn2").addEventListener("click", myCar.changeColor);
+    </script>
+</body>
+</html>

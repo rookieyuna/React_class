@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02ECMAScript02.html</title>
+    <script>
+        var sumLimit1 = function (start,end){
+            var sum = 0;
+            for(var i=start; i<=end; i++){
+                sum += i;
+            }
+            return sum;
+        }
+        var result = sumLimit1(1,10);
+        console.log("result="+result);
+
+        /*
+        ES6의 Arrow Function(화살표함수)
+            :Java의 람다식과 비슷하다. 기존의 함수에서 function을 제거하고
+            괄호사이에 =>(화살표)를 삽입한다.
+            형식] 
+                let함수명 = (파라미터) => {함수의 실행부}
+        */
+        let sumLimit2 = (start,end) => {
+            let sum2 = 0;
+            for(var i=start; i<=end; i++){
+                sum2 += i;
+            }
+            return sum2;
+        }
+        let result2 = sumLimit2(1,100);
+        console.log("result2="+result2);
+    </script>
+</head>
+<body>
+    <h2>화살표 함수 사용하기</h2>
+    <p id="myPoint"></p>
+    <script>
+        /*
+        화살표 함수에서 실행문장이 한 줄 인경우 중괄호 생략이 가능하다
+        또한 return도 생략할 수 있다.
+        */
+        hello3 = (val) => "Hello"+val;
+        document.getElementById("myPoint").innerHTML = hello3("World!!!");
+    </script>
+</body>
+</html>

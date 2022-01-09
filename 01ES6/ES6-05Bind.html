@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>bind()함수</h2>
+    <script>
+    console.error("bind() called..1");
+    //객체생성 (리터럴 표기법을 통한 생성)
+    var obj = { name: 'rookie'};
+    //함수생성 
+    function myBind(){
+        //바인딩이 되지 않은 상태에서는 this가 window객체를 가리킨다.
+        console.log('this.name', this.name);
+    }
+    /*
+    객체 obj와 함수 myBind()를 바인드하여 새로운 함수를 생성한다.
+    즉, 함수와 객체를 묶어서 this를 window객체가 아닌 내가 지정한 객체로
+    고정시키는 역할을 한다.
+    */
+    var myBinding = myBind.bind(obj);
+
+    myBinding(); //콘솔에 rookie출력
+    myBind(); // 아무것도 출력안됨
+
+    console.error("bind() called..2");
+    
+    class Point{
+        constructor(x,y){
+            this.x = x;
+            this.y = y;
+        }
+        info(){
+            /*
+            템플릿 문자열
+            : `(backquote)을 이용해서 문자열과 변수를 연결하는 역할
+            변수 표현시 ${변수명}과 같이 사용할 수 있다.
+            일반적인 문자열을 표현하는 것처럼 연결해서 기술할 수 있어 편리하다.
+            (,로연결하면 띄어쓰기되고 +연결하면 한단어)
+            */
+            console.log('템플릿문자열', `x: ${this.x}, y: ${this.y}`);
+            console.log('일반JS사용', 'x:'+this.x, ", y:",this.y); 
+        }
+    }
+    //Point 객체 생성 후 멤버함수 호출
+    var point1 = new Point(10,20);
+    point1.info(); //10,20으로 결과 출력
+
+    //Point객체의 info()함수와 pobj객체를 바인딩한다
+    var pobj = {x:100, y:200};
+    //바인딩과 동시에 호출한다.
+    point1.info.bind(pobj)(); //100,200으로 결과 출력
+    </script>
+</body>
+</html>

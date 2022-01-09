@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript의 문제점1</title>
+    <script>
+        /*
+        var 문제점 : 지역의 불확실성
+
+        1-1) 스코프(지역 혹은 범위)가 명확하지 않다. myFunc1()에서 선언된
+        num1은 지역변수이므로 전역지역에서 출력하면 에러가 발생한다.
+        */
+        function myFunc(){
+            var num1 = 1; //지역변수
+        }
+        /*
+        1-2) var키워드 없이 변수를 선언하면 전역변수가 된다. 
+            따라서 script영역 전체에서 접근할 수 있다
+        */
+        function myFunc2(){
+            num2 = 2;
+        }
+        function myFunc3(){
+            console.log("myFunc3()메소드안 num2="+num2); //전역변수이므로 정상출력됨
+        }
+        //console.log("num1="+num1);//지역변수이므로 에러발생
+        myFunc2();
+        console.log("전역지역 num2"+num2); //전역변수이므로 정상출력
+        myFunc3();
+
+        for(var i=0; i<=10; i++){
+            console.log("for루프안 i="+i);
+        }
+        console.log("for루프밖 i="+i);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

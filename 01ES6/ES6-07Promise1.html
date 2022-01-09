@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        //전달된 함수를 callBackFunc 매개변수가 받는다. 이를 통해 호출할 수 있다.
+        function myGetData(callBackFunc){
+            params = {};
+            //jQuery의 $.get()함수를 통해 비동기로 요청한다.
+            $.get('./myData.txt', params, function(resData){
+                //요청에 성공하면 txt파일의 모든 내용이 resData로 콜백된다.
+                callBackFunc(resData);
+            });
+        }
+
+        //함수 호출시 인수로 또 다른 함수를 전달한다.
+        myGetData(function(argData){
+            console.error("프로미스 사용하기1")
+            console.log(argData)
+        })
+    </script>
+</body>
+</html>
