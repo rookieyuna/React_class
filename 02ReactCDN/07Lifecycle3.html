@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- 
+    소멸단계
+    -컴포넌트가 DOM에서 제거될 때 수행되는 함수로 1가지만 존재한다.
+    -요청취소, 타이머해제, 구독해제 등의 작업을 처리하기에 적합하다.
+
+    1. shouldComponentUpdate()
+     -->
+
+    <h2>컴포넌트의 라이프 사이클3</h2>
+    <h3>
+        초기화단계(Mounting), 업데이트단계(Updating), 소멸단계(Unmountion)의 3단계가 있다
+    </h3>
+    <h4>소멸단계(Unmountion)</h4>
+    
+    <h4>1. shouldComponentUpdate()</h4>
+    <div id="myUnmount1"></div>
+    <script type="text/babel">
+        class Container extends React.Component {
+            //생성자에서 state초기화
+            constructor(props){
+                super(props);
+                this.state = {showFlag : true};
+            }
+            //버튼을 누를때 state를 false로 변경한다.
+            deleteGNB = () => {
+                this.setState({showFlag:false});
+            }
+            render() {
+                let myheader;
+                //state가 true인 경우에만 GNB컴퍼넌트를 변수에 추가한다.
+                if (this.state.showFlag){
+                    myheader = <GNBComp />;
+                };
+                return (
+                    <div>
+                        {myheader}
+                        <button type="button" onClick={this.deleteGNB}>
+                            GNB삭제
+                        </button>
+                    </div>
+                );
+            }
+        }
+        
+        class GNBComp extends React.Component{
+            //해당 컴포넌트가 DOM에서 제거될때 호출된다.    
+            componentWillUnmount(){
+                alert("GNBComp 컴포넌트는 해제되었습니다.");
+            }
+            render() {
+                return(
+                    <div>
+                        <h2>GNB</h2>
+                        <table border="1">
+                            <tr>
+                                <td>메뉴1</td>
+                                <td>메뉴2</td>
+                                <td>메뉴3</td>
+                            </tr>
+                        </table>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<Container />, document.getElementById('myUnmount1'));
+    </script>
+</body>
+</html>

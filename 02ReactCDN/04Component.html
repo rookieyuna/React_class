@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- 
+        컴포넌트(Component)
+        -HTML 요소를 반환하는 함수와 같은 역할을 한다.
+        -독립적이며 재사용이 가능한 코드이다.
+        -JS함수와 동일한 용도로 사용되지만, 렌더링을 통해 HTML을 반환한다.
+        -class형태와 function형태 두 가지가 사용된다.
+     -->
+    <div id="myClass"></div>
+    <script type="text/babel">
+    /*
+    컴포넌트 제작시
+    -이름은 대문자로 시작해야 한다. 
+    -React.Component를 상속해서 접근권한을 부여한다.
+    -render()함수를 통해 HTML코드를 반환한다
+    -클래스명이 Car라면 render()에서는 <Car/>로 기술한다.
+    */
+    class Car extends React.Component {
+        render(){
+            return <h4>루키는 고양이입니다~</h4>;
+        }
+    }
+    ReactDOM.render(<Car />, document.getElementById('myClass'))
+    </script>
+
+
+
+    <h2>Function Component(함수형 컴포넌트)</h2>
+    <h3>출력결과</h3>
+    <div id="myFunction"></div>
+    <script type="text/babel">
+    /*
+    함수형태의 컴포넌트는 render()함수내에서 return 하지 않는다.
+    함수 자체가 render()역할을 한다.
+    */
+    function Computer(){
+        return <h4>루키는 귀여워요~!</h4>;
+    }
+    ReactDOM.render(<Computer />, document.getElementById('myFunction'))
+    </script>
+    
+
+    
+    <h2>Constructor(생성자)</h2>
+    <div id="myConstructor"></div>
+    <script type="text/babel">
+    class Animal extends React.Component {
+        /*
+        Java에서 생성자와 동일한 역할을 하는 함수로 변수 초기화에 주로 사용된다.
+        */
+        constructor(){
+            super();
+            /*
+            state : 컴포넌트의 상태를 저장할 수 있으며, 컴포넌트 내부에서
+                상태값을 변경할 수 있다. 
+            */
+            this.state = {cat : "페르시안"}
+        }
+        render(){
+            /*state에 저장된 cat을 가져와서 표현식으로 출력한다.*/
+            return <h4>고양이는 {this.state.cat}이 최고댬</h4>;
+        }
+    }
+    ReactDOM.render(<Animal />, document.getElementById('myConstructor'))
+    </script>
+
+
+    <h2>컴포넌트 중첩해서 사용하기</h2>
+    <div id="myCic"></div>
+    <script type="text/babel">
+    /*JSP의 include와 동일하게 컴포넌트가 다른 컴포넌트를 포함하는 형태로
+    사용할 수 있다. 단 이때도 최상위 엘리먼트는 하나만 존재해야 한다.*/
+        class Computer extends React.Component {
+            render() {
+                return <h4>내 컴퓨터 최고</h4>
+            }
+        }
+        class Notebook extends React.Component {
+            render() {
+                return (
+                    <div>
+                        <Computer/>
+                        <h4>내 노트북도 최고</h4>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<Notebook />, document.getElementById('myCic'))
+    </script>
+
+
+        
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<!-- 
+초기화단계
+    -DOM 요소를 삽입할 때 즉, 컴포넌트 객체가 생성될 때 한번 수행된다.
+    -컴포넌트를 마운트할 때 순서대로 호출되는 수명주기 함수는 아래 4가지이다.
+        1. constructor()
+        2. getDerivedStateFromProps()
+        3. render()
+        4. componentDidMount()
+ -->
+    <h2>컴포넌트의 라이프 사이클1</h2>
+    <h3>
+        초기화단계(Mounting), 업데이트단계(Updating), 소멸단계(Unmountion)의 3단계가 있다
+    </h3>
+    <h4>초기화단계(Mounting)</h4>
+    <!-- 
+    constructor()
+        : props 매개변수가 컴포넌트의 기본속성값이 적용된 상태로 호출된다.
+        수명주기함수에서 가장 먼저 호출되며, 내부에서는 반드시 super()를
+        호출해야한다. props의 경우 필요없다면 기술하지 않아도된다.
+     -->
+    <h4>1. constructor() - 생성자</h4>
+    <div id="myMounting1"></div>
+    <script type="text/babel">
+        class MyClass1 extends React.Component {
+            /*
+            2. 수명주기 함수에서 제일 먼저 호출되는 것이 생성자이므로 전달되는 props를
+                매개변수로 받을 수 있다.
+            */
+            constructor(props){
+                //2-1. 전달되는 props가 있다면 super()에서도 사용해야 한다.
+                super(props);
+
+                //3-1. 전달되는 props가 없다면 하드코딩으로 state값을 초기화할 수 있다.
+                //this.state = {faveriteFruit: '망고스틴'};
+                //3-2. 전달되는 props가 있다면 이를 통해 state값을 초기화한다.
+                this.state = {faveriteFruit: this.props.myFruit};
+            }
+            render() {
+                return (
+                    <h5>내가 좋아하는 과일은 {this.state.faveriteFruit}</h5>
+                );
+            }
+        }
+        /*
+        1. 컴포넌트 생성시 props를 전달하기 위해 속성을 추가한다. 필요없는 경우
+            추가하지 않아도 된다.
+        */
+        ReactDOM.render(<MyClass1 myFruit='구아바'/>, document.getElementById('myMounting1'));
+    </script>
+
+
+    <!-- 
+    getDerivedStateFromProps()
+        : state의 속성값을 새로운 값으로 변경할 때 주로 사용하는 수명주기 함수이다.
+        생성자로 전달된 props를 통해 state를 변경하게 된다.
+    -->
+    <h4>2. getDerivedStateFromProps()</h4>
+    <div id="myMounting2"></div>
+    <script type="text/babel">
+        class MyClass2 extends React.Component {
+            //2. 생성자에서는 하드코딩으로 state값 초기화
+            constructor(props){
+                super(props);
+                //1차 초기화
+                console.log("MyClass2", "constructor() 호출됨");
+                this.state = {faveriteMovie: "알라딘: 지니짱!"};
+            }
+            //3. render()함수 호출전에 미리 호출된다.
+            static getDerivedStateFromProps(props, state){
+                /*
+                전달받은 props를 통해 state값을 변경한 후 반환한다. 만약 return을
+                주석처리하면 '알라딘'이 출력된다.
+                */
+                console.log("MyClass2", "getDerivedStateFromProps() 호출됨")
+                return {faveriteMovie: props.favMovie};
+            }
+            render() {
+                //4. 최종으로 렌더링 되면 '어벤져스'가 출력된다.
+                console.log("MyClass2", "render() 호출됨")
+                return (
+                    <h5>최근 최고영화: {this.state.faveriteMovie}</h5>
+                );
+            }
+        }
+        //1.컴포넌트 렌더링. 이때 props를 전달한다.
+        ReactDOM.render(<MyClass2 favMovie="어벤져스: EndGame"/>, document.getElementById('myMounting2'));
+    </script>
+
+
+
+    <h4>3. render()</h4>
+    <div id="myMounting3">
+        render()메소드는 필수적으로 사용하는 함수이므로 생략
+    </div>
+
+
+    <!-- 
+        componentDidMount()
+            : render()함수의 반환값이 실제 DOM에 반영된 직후 호출된다.
+            Timer를 삽입하기에 적합하다.
+    -->
+    <h4>4. componentDidMount()</h4>
+    <div id="myMounting4"></div>
+    <script type="text/babel">
+        class MyClass4 extends React.Component {
+            constructor(props){
+                super(props);
+                this.state = {works: "야근은 시러요"};
+            }
+            //웹브라우저에 렌더링 된 후 2초가 지나면 state값을 변경한다.
+            componentDidMount(){
+                setTimeout(()=>{
+                    this.setState({works:"즐퇴요~~"})
+                },2000);
+                /*
+                JS의 타이머 관련함수
+                    setTimeout() : 지정된 시간 이후 딱 한번만 함수를 호출함
+                    setInterval() : 지정된 시간에 지속적으로 함수를 호출함
+                */
+            }
+            render() {
+                return (
+                    <h5>오늘은 {this.state.works}</h5>
+                );
+            }
+        }
+        ReactDOM.render(<MyClass4 />, document.getElementById('myMounting4'));
+    </script>
+
+</body>
+</html>

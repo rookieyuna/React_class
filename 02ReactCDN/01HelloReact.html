@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- 
+        React.js
+        - 페이지스북에서 뉴스피드를 표현하기 위해 2011년 처음 만들어짐
+        - 최초 공개 릴리스(v0.3.0)은 2013년 7월에 있었음
+        - 현재 최신버전은 17.xx
+        - create-react-app에서는 babel, webpack, jest등의 기능을 지원함
+     -->
+    <div id="mydiv"></div>
+    <script type="text/babel">
+    //JS의 class를 통해 리액트 컴포넌트를 생성한다.
+    class Hello extends React.Component{
+        //컴포넌트에서 render()함수를 통해 출력할 내용을 반환한다.
+        //render함수를 자동으로 호출되며, 화면에 동적인 엘리먼트를 추가해준다.
+        render(){
+            return <h1>Hello React!</h1>
+        }
+    }
+    //컴포넌트를 지정한 엘리먼트에 출력한다. 컴포넌트는 <컴포넌트/>형식으로 사용한다.
+    ReactDOM.render(<Hello />, document.getElementById('mydiv'))
+    </script>
+
+</body>
+</html>

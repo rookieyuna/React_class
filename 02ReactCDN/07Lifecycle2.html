@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- 
+    업데이트단계
+    - 구셩요소의 상태나 컴포넌트가 변경될 때마다 업데이트가 진행된다.
+    - 이때 호출되는 수명주기함수는 다음과 같다.
+        1. shouldComponentUpdate()
+        2. render()
+        3. getSnapshotBeforeUpdate()
+        4. componentDidUpdate()
+     -->
+    <h2>컴포넌트의 라이프 사이클2</h2>
+    <h3>
+        초기화단계(Mounting), 업데이트단계(Updating), 소멸단계(Unmountion)의 3단계가 있다
+    </h3>
+    <h4>업데이트단계(Updating)</h4>
+    <!-- 
+    shouldComponentUpdate()
+        :렌더링을 계속할지 여부를 지정하는 Boolean 값을 반환한다.
+        기본값은 true이고, 만약 false가 반환되면 렌더링 된 상태가 업데이트 되지 않는다.
+     -->
+    <h4>1. shouldComponentUpdate()</h4>
+    <div id="myUpdating1"></div>
+    <script type="text/babel">
+        class Sports extends React.Component {
+            //생성자 : state를 초기화한다.
+            constructor(props){
+                super(props);
+                this.state = {sport: "야구"};
+            }
+            //state가 변경되었을 때 변경여부를 지정한다.
+            shouldComponentUpdate() {
+                return true; //만약 false이면 변경되지 않는다.
+            }
+            //버튼을 눌렀을 때 state를 축구로 변경한다.
+            changeSport = () => {
+                this.setState({sport: "축구"});
+            }
+            render() {
+                return(
+                    <div>
+                        <h1>내가 좋아하는 스포츠는 {this.state.sport}</h1>
+                        <button type="button" onClick={this.changeSport}>변경하기</button>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<Sports/>, document.getElementById('myUpdating1'));
+    </script>
+
+
+
+    <h4>2. getSnapshotBeforeUpdate(), componentDidUpdate()</h4>
+    <div id="myUpdating2"></div>
+    <script type="text/babel">
+    /*
+    getSnapshotBeforeUpdate()
+        : 렌더링 결과가 실제 DOM에 반영되기 전에 호출된다. 따라서 업데이트
+            전의 state값을 확인할 수 있다.
+    componentDidUpdate()
+        : 위 함수를 사용하는 경우 반드시 해당 함수를 포함해야 한다.
+            getSnapshotBeforeUpdate()함수의 반환값이 해당 함수로 전달되기 때문이다.
+            DOM의 구성요소가 업데이트 된 이후에 호출된다.
+    */
+        class HotPlaces extends React.Component {
+            //생성자에서 state를 초기화
+            constructor(props){
+                super(props);
+                this.state = {hotPlace : "홍대"};
+            }
+            //render()의 반환값이 실제 DOM에 반영된 직후 호출된다. 초기화 단계에서 사용한다.
+            componentDidMount() {
+                setTimeout(() => {
+                    this.setState({hotPlace:"경리단길"})
+                }, 2000);
+            }
+            //state가 업데이트 되기 이전의 값을 반환한다.
+            getSnapshotBeforeUpdate(prevProps, prevState){
+                document.getElementById("div1").innerHTML = 
+                    "업데이트 이전 : "+prevState.hotPlace;
+                
+            }
+            //state가 업데이트 되고 난 이후의 값을 반환한다.
+            componentDidUpdate(){
+                document.getElementById("div2").innerHTML = 
+                        "업데이트 이후 : "+this.state.hotPlace;
+            }
+            render(){
+                return(
+                    <div>
+                        <h1>내생의 최고 핫플은 {this.state.hotPlace}</h1>
+                        <div id="div1">업데이트 이전값</div>
+                        <div id="div2">업데이트 이후값</div>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<HotPlaces/>, document.getElementById('myUpdating2'));
+    </script>
+</body>
+</html>

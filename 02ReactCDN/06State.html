@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- 
+        : React 컴포넌트의 상태를 저장할 때 주로 사용된다.
+        props와 비슷하지만 차이점이라면, state는 컴포넌트 내부에 존재하기
+        때문에 상태값을 변경할 수 있다.
+        값 변경시에는 setState()함수를 사용해야 된다.
+     -->
+    <h2>State 01</h2>
+    <h3>state 생성 및 초기화, 출력하기</h3>
+    <div id="myArea1"></div>
+    <script type="text/babel">
+        class Person extends React.Component {
+            //생성자정의
+            constructor() {
+                super();
+                //state를 생성. JSON객체 형태로 기술한다.
+                this.state ={
+                    name: "홍길동",
+                    age: 28,
+                    hobby: "자전거",
+                    birth: 2000
+                };
+            }
+            //각 state값을 출력한다. 사용법은 props와 동일하다.
+            render(){
+                return (
+                    <div>
+                        <h1>내이름은 {this.state.name}</h1>
+                        <p>
+                            나이 : {this.state.age}<br/>
+                            취미 : {this.state.hobby}<br/>
+                            태어난해 : {this.state.birth}<br/>
+                        </p>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<Person/>, document.getElementById('myArea1'))    
+    </script>
+
+
+
+    <h2>State 02</h2>
+    <h3>함수 호출로 state 변경하기</h3>
+    <div id="myArea2"></div>
+    <script type="text/babel">
+        class Car extends React.Component {
+            //생성자 정의
+            constructor(){
+                super();
+                //state생성
+                this.state = {
+                    brand: "KIA",
+                    model: "모닝",
+                    color: "검은색은 Black",
+                    year: 2002
+                };
+            }
+            /*
+            화살표 함수를 통해 멤버함수 생성
+            var 함수명 = function(){} 와 같은 무기명 함수에서 
+                function을 제거하고 소괄호와 중괄호 사이에 화살표를 삽입한다.
+            */
+            changeColor = () => {
+                //setState()함수를 통해 state값을 변경한다.
+                this.setState({
+                    color : "파란색은 blue",
+                    model : "프라이드"
+                });
+            }
+            render(){
+                return(
+                    <div>
+                        <h1>My {this.state.brand}</h1>
+                        <p>
+                            내차정보 <br/>
+                            색깔 : {this.state.color} <br/>
+                            모델명 : {this.state.model} <br/>
+                            제조사 : {this.state.brand} <br/>
+                        </p>
+                        <button type="button" onClick={this.changeColor}>
+                            색깔변경
+                        </button>
+                    </div>
+                );
+                /*
+                버튼에 이벤트 핸들러를 사용할경우 반드시 Camel case형태로 기술해야 한다.
+                onclick이라고 입력하면 제대로 동작하지 않는다.
+                */
+            }
+        }
+        ReactDOM.render(<Car/>, document.getElementById('myArea2'))
+    </script>
+</body>
+</html>
