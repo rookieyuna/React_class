@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <style>
+        div{border:3px solid rgb(245, 108, 199); margin:10px;padding:10px}
+    </style>
+</head>
+<body>
+    <div id="myDiv1"></div>
+    <script type="text/babel">
+        class ChildComp extends React.Component{
+            render(){
+                return(
+                    <div>
+                        <h4>여긴 자식 컴포넌트</h4>
+                        {/*
+                            버튼 클릭 시 props로 전달된 함수를 호출한다.
+                            즉, 부모에서 전달된 함수를 호출하는 형식이므로 부모의
+                            state값이 변경되면서 다시 렌더링이 일어난다.
+                        */}
+                        <button onClick={()=>{this.props.myClickEvent('자식에서 전달한 파라미터')
+                            }}>자식버튼</button>
+                        <p>
+                            {/*props로 전달된 변수를 출력한다.*/}
+                            {this.props.myParam}
+                        </p>
+                    </div>
+                );
+            }
+        }
+        class ParentComp extends React.Component {
+            //생성자에서 state 초기화
+            constructor(props){
+                super(props);
+                this.state = {p1: '', p2:''};
+            }
+            render(){
+                return (
+                    <div>
+                        <h2>여긴 부모 컴포넌트</h2>
+                        {/*
+                            아래 버튼의 onClick이벤트 리스너에서 동작하는 무기명 함수는
+                            해당 클래스의 state값을 변경하는 기능을 가지고 있다.
+                            여기서 사용한 this는 해당 객체(컴포넌트)를 가리켜야 하지만
+                            일반함수를 사용하면 bind()를 해야 해당 객체를 가리키고
+                            그렇지 않으면 button을 가리키게 되므로 제대로 동작하지 않는다.
+                        */}
+                        <button onClick={
+                            function(){
+                                this.setState({p1 : "부모에서 전달한 파라미터"});
+                            }.bind(this)
+                        }>부모버튼</button>
+                        <p>
+                            {this.state.p2}
+                        </p>
+                        {/*
+                            state중 p1이 변경되면 렌더링이 다시 발생되므로
+                            자식으로 전달되어 "부모에서..." 문자열이 출력된다.    
+                        */}
+                        <ChildComp myParam={this.state.p1}
+                            myClickEvent={(param)=>{
+                                this.setState({
+                                    p2 : param
+                                });
+                            }}/>
+                        {/*
+                            myClickEvent라는 props는 특정 값이 받은 후 부모쪽
+                            state값을 변경하는 기능을 가지고 있다. 즉, 함수를
+                            props로 전달한다.    
+                        */}    
+                    </div>
+                );
+            }
+        };
+        ReactDOM.render(<ParentComp/>, document.getElementById('myDiv1'));
+    </script>
+</body>
+</html>

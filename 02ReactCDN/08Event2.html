@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <h3>파라미터 전달하기 - 화살표함수</h3>
+    <div id="myDiv4"></div>
+    <script type="text/babel">
+        class Baseball extends React.Component {
+            hitBall = (str) => {
+                alert(str);
+            }
+            /*
+            화살표 함수를 통해 매개변수를 받아야 한다면 이벤트 핸들러 내에서
+            작성 시 아래와 같이 화살표 함수 원형을 그대로 기술해야 한다
+            그렇지 않으면 화면 로딩시 함수가 즉시 호출되어 실행된다.
+            onClick={this.hitBall("홈~~런!!!")} : 이 경우 로딩 즉시 호출
+            */
+            render() {
+                return (
+                    <button onClick={()=>this.hitBall("홈~~런!!!")}>매개변수전달</button>
+                );
+            }
+        }
+        ReactDOM.render(<Baseball/>, document.getElementById('myDiv4'));
+    </script>
+
+
+
+    <h3>파라미터 전달하기 - 일반함수</h3>
+    <div id="myDiv5"></div>
+    <script type="text/babel">
+        class Baseball extends React.Component {
+            hitBall(str) {
+                alert(str);
+            }
+            /*
+            일반함수를 통해 매개변수를 받아야 한다면, this(해당객체)와 함수를
+            바인딩 한 후 호출해야한다.
+            단, 이때 bind()함수는 bind(this, 함수호출시 전달할 파라미터)로 입력한다.
+            onClick={this.hitBall("호~옴~런!!!")} : 이 경우 로딩 즉시 호출
+            */
+            render() {
+                return (
+                    <button onClick={this.hitBall.bind(this, "호~옴~런!!!")}>매개변수전달</button>
+                );
+            }
+        }
+        ReactDOM.render(<Baseball/>, document.getElementById('myDiv5'));
+    </script>
+
+
+
+
+    <h3>이벤트 객체 전달하기 - 화살표함수</h3>
+    <div id="myDiv6"></div>
+    <script type="text/babel">
+        class EventObjSend1 extends React.Component {
+            /*
+            전달되는 이벤트를 매개변수로 받아 type을 출력하면 해당
+            이벤트명이 출력된다.
+            */
+            sendEvent = (msg, evt)=> {
+                console.log('화살표함수', msg, evt.type);
+                console.log(evt); //이벤트 객체 차체를 콘솔에 출력 too much information
+            }
+            /*
+            화살표 함수 사용시 이벤트 객체를 전달하려면 event객체를 인수로
+            직접 기술해야 한다.
+            */
+            render() {
+                return (
+                    <div>
+                        <button onClick={(event)=> this.sendEvent("onClick이벤트", event)}>눌러보세요1</button>
+                        <br/>
+                        <input type="text" onKeyUp={(event)=> this.sendEvent("onKeyUp 이벤트", event)} 
+                            placeholder="써보세요1"/>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<EventObjSend1/>, document.getElementById('myDiv6'));
+    </script>
+
+
+
+    <h3>이벤트 객체 전달하기 - 일반함수</h3>
+    <div id="myDiv7"></div>
+    <script type="text/babel">
+        class EventObjSend2 extends React.Component {
+            //일반함수의 경우에도 event 객체를 받아서 사용한다.
+            sendEvent = (msg, evt)=> {
+                console.log('일반함수', msg, evt.type);
+            }
+
+            render() {
+                /*
+                일반함수 사용시 이벤트 객체를 전달하려면 this사용을 위해
+                함수와 객체를 바인딩하면 bind() 함수의 마지막 인자로 event객체가 
+                자동으로 전송된다. 즉, 인수로 기술하지 않는다.
+                */
+                return (
+                    <div>
+                        <button onClick={this.sendEvent.bind(this,"onClick이벤트")}>눌러보세요2</button>
+                        <br/>
+                        <input type="text" onKeyUp={this.sendEvent.bind(this,"onKeyUp 이벤트")} 
+                            placeholder="써보세요2"/>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<EventObjSend2/>, document.getElementById('myDiv7'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- 
+        React에서 이벤트 핸들러 사용시 주의사항
+        - 이벤트 핸들러는 반드시 Camel Case로 작성해야한다
+            onclick : 에러 , onClick : 정상
+        - DOM요소에만 이벤트를 지정할 수 있다.
+     -->
+    <h3>Event 핸들러 사용방법</h3>
+    <div id="myEvent1"></div>
+    <script type="text/babel">
+    /*
+    이벤트 사용방법
+    방법1 : 렌더링 시점에 함수를 만들어 전달하는 방식
+    방법2 : 함수를 미리 정의해두고 호출하는 방식. 기능적 차이는 없으나
+        두번째 방법이 가독성도 좋고 유지보수에 편리하다.
+    */
+        function myAlert(){
+            alert("click이벤트가 발생되었습니다.");
+        }
+        const myElement = (
+            <div>
+                {/* 방법1을 이용한 이벤트 사용*/}
+                <button onClick={
+                    function(){
+                        console.log("click이벤트가 발생됨")
+                    }
+                }>Click이벤트1 - console</button>
+                {/* 방법2을 이용한 이벤트 사용. 이때는 함수명만 기술한다 */}
+                <button onClick={myAlert}>Click이벤트2-myAlert()</button>
+            </div>
+        );
+        ReactDOM.render(myElement, document.getElementById('myEvent1'));
+    </script>
+
+
+    <h3>this 사용하기1-화살표함수</h3>
+    <div id="myEvent2"></div>
+    <script type="text/babel">
+        /*
+        ES6에서의 화살표 함수에서 사용되는 this는 호출되는 대상에 관계없이
+        항상 정의된 객체를 가리킨다. 즉 this는 ThisComp1객체(컴포넌트)이므로
+        경고창에 Object라고 입력된다.
+        */
+        //컴포넌트 정의
+        class ThisComp1 extends React.Component{
+            thisFunc = () => {
+                alert("ThisComp1 나는누구?"+ this);
+            }
+
+            render() {
+                return(
+                    <button onClick={this.thisFunc}>this는 누구죠?</button>
+                );
+            }
+        }
+        ReactDOM.render(<ThisComp1/>, document.getElementById('myEvent2'));
+    </script>
+
+
+    <h3>this 사용하기2-일반함수</h3>
+    <div id="myEvent3"></div>
+    <script type="text/babel">
+    /*
+    일반함수로 생성한 경우 this가 해당 컴포넌트를 가리키지 못하므로
+    바인드함수를 통해 연결을 해주어야한다.
+    */
+        class ThisComp2 extends React.Component{
+            constructor(props){
+                super(props);
+                //생성자에서 this(ThisComp2객체(컴포넌트))와 thisFunc()함수를 바인딩
+                //아래 바인딩이 안되면 undefined이 출력
+                this.thisFunc = this.thisFunc.bind(this);
+            }
+            thisFunc(){
+                alert("ThisComp2 나는누구?"+this);
+            }
+
+            render() {
+                return(
+                    <button onClick={this.thisFunc}>this는 누구죠?</button>
+                );
+            }
+        }
+        ReactDOM.render(<ThisComp2/>, document.getElementById('myEvent3'));
+    </script>
+    <!-- 
+        [***매우중요]
+        따라서 this를 통해 항상 동일한 객체(컴포넌트)를 가리키게 하려면
+        bind()함수를 통해 바인딩하거나, 화살표함수를 사용해야 한다.
+     -->
+</body>
+</html>

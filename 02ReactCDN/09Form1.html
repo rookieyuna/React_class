@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <h2>React에서 Form 사용하기</h2>
+    <div id="mydiv1"></div>
+    <script type="text/babel">
+        class MyForm extends React.Component {
+            render(){
+                /*
+                폼값 전송시 이벤트 객체를 통해 입력한 태그의 여러가지 속성값을 
+                얻어올 수 있다.
+                    type 속성값 : event.target.type
+                    value 속성값 : event.target.value
+                이벤트 객체를 console에 표시해보면 굉장히 많은 속성이 있으므로
+                위와 같은 방식을 통해 여러값을 사용할 수 있다.
+                */
+                return (
+                <form>
+                    {/*JSX에서의 주석은 이와 같이 사용한다*/}
+                    {/*
+                        이벤트 핸들러에서 사용하는 함수는 {}안에 무기명함수
+                        혹은 화살표 함수 둘 다 기술할 수 있다.
+                    */}
+                    <p>
+                        아이디 : <input type="text" name="userid"
+                            onKeyUp={function(){console.log(event.target.value)}}/>
+                        <br/>
+                        비밀번호 : <input type="text" name="userpw"
+                            onKeyUp={()=> console.log(event.target.value)}/>
+                    </p>
+                </form>
+                );
+            }
+        }
+        ReactDOM.render(<MyForm/>, document.getElementById('mydiv1'));
+    </script>
+</body>
+</html>

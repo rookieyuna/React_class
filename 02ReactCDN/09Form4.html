@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <h2>폼 전송(Submit)</h2>
+    <div id="mydiv4"></div>
+    <script type="text/babel">
+        class MyForm4 extends React.Component {
+            //생성자에서 state를 초기화
+            constructor(props){
+                super(props);
+                this.state = {userAge: '나이초기화'};
+            }
+            /*
+            form에서 submit이벤트가 발생되면 호출되는 함수
+            이벤트 객체를 통해 화면의 깜빡임없이 데이터 처리를 하기위해
+            preventDefault()함수를 호출한다
+            */
+            mySubmitHandler = (event) => {
+                /*
+                preventDefault()
+                    :폼값의 전송을 막아주는 함수로 onSubmit이벤트 리스너에 
+                    false를 반환한 것과 동일한 동작을 한다. (새로고침 막기위해 submit종료)
+                */
+                event.preventDefault(); 
+                //React에서는 전송된 폼값을 state를 통해 확인한다.
+                alert("전송된 폼값 확인: "+ this.state.userAge);
+            }
+            /*
+            입력상자에서 입력한 내용이 변경될때마다 호출되어 state값을
+            실시간으로 변경한다. 그러면서 지속적으로 화면이 렌더링 된다.
+            */
+            myChangeHandler = (event) => {
+                this.setState({userAge: event.target.value});
+            }
+            render(){
+                return (
+                    <form onSubmit={this.mySubmitHandler}> 
+                        <h3>입력한 나이 : {this.state.userAge} </h3>
+                        <p>님의 나이를 입력하세요</p>
+                        <input type="text" onChange={this.myChangeHandler}/>
+                        {/*input태그 작성시 아래와 같이 pair형태로 작성하는 것을 권장한다*/}
+                        <input type="submit"></input>
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(<MyForm4/>, document.getElementById('mydiv4'));
+    </script>
+</body>
+</html>

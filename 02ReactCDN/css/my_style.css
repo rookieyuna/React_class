@@ -1,0 +1,16 @@
+.my-style {
+    background-color: #366ad3;
+    color: white;
+    padding: 5px;
+    font-size: 1.5em;
+    font-family: Tahoma;
+    text-align: center;
+}
+#my-style {
+    background-color: #f53eaf;
+    color: yellow;
+    padding: 10px;
+    font-size: 2em;
+    font-family: Impact;
+    text-align: center;
+}

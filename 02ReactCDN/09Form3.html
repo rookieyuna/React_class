@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <h2>조건부 렌더링</h2>
+    <div id="mydiv3"></div>
+    <script type="text/babel">
+        class MyForm3 extends React.Component {
+            //생성자에서 state를 초기화
+            constructor(props){
+                super(props);
+                this.state = {username: ''};
+            }
+            //멤버함수. 이벤트객체를 통해 얻어온 이름으로 state를 변경한다.
+            myChangeHandler = (event) => {
+                this.setState({username: event.target.value});
+            }
+            render(){
+                let header = ''; 
+                //입력된 이름이 있는 경우에만 header부분을 추가적으로 렌더링
+                if(this.state.username){
+                    header = <h1>내이름은 {this.state.username}</h1>;
+                //
+                } else {
+                    header ='';
+                }
+                
+                
+                return (
+                    <form> 
+                        {header}
+                        <p>님의 이름을 입력하세요</p>
+                        <p>입력된 내용이 있을때만 보입니다.</p>
+                        <input type="text" onChange={this.myChangeHandler}/>
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(<MyForm3/>, document.getElementById('mydiv3'));
+    </script>
+</body>
+</html>

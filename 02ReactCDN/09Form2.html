@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <h2>React에서 Form 사용하기</h2>
+    <div id="mydiv2"></div>
+    <script type="text/babel">
+        class MyForm2 extends React.Component {
+            //생성자에서 state를 초기화
+            constructor(props){
+                super(props);
+                this.state = {username: '초기화됨'};
+            }
+            /*
+            이벤트 객체를 파라미터로 전달받아 state값을 변경한다
+            state를 변경할때는 반드시 setState()함수를 사용해야 렌더링이 된다
+            그러므로 이름 입력시 즉시 반영되어 아래에 출력된다
+            */
+            myChangeHandler = (event) => {
+                this.setState({username: event.target.value});
+            }
+            render(){
+                return (
+                    <form> 
+                        {/*최초 로딩시에는 '초기화됨'이 출력된다*/}
+                        <h1>입력한 이름은 : {this.state.username} </h1>
+                        {/*입력시 내용이 변경될때마다 멤버함수 호출*/}
+                        이름 : <input type="text" onChange={this.myChangeHandler}/>
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(<MyForm2/>, document.getElementById('mydiv2'));
+    </script>
+</body>
+</html>

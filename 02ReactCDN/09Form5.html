@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <h2>여러개의 input태그가 있는 폼</h2>
+    <div id="mydiv5"></div>
+    <script type="text/babel">
+        class MyForm5 extends React.Component {
+            //생성자에서 state를 초기화
+            constructor(props){
+                super(props);
+                //3개의 입력상자의 내용을 저장하기 위한 state생성
+                this.state = {
+                    movie : '',
+                    actor : null,
+                    content : ''    
+                };
+            }
+            
+            //각 입력상자에서 입력값의 변화가 있을때마다 호출되는 함수
+            myChangeHandler = (event) => {
+                //이벤트 객체를 통해 입력상자의 name, value 속성값을 얻어온다.
+                let _name = event.target.name;
+                let _value = event.target.value;
+
+                /*
+                변화된 입력값을 감지하여 그와 동일한 이름의 state를 자동으로 찾아 값을 변경한다. 
+                즉, 대괄호 표기법을 통해 여러개의 state값을 하나의 문장으로 처리할 수 있다.
+                (대괄호 표기법이 아니면 if문을 통해 일일히 확인작업이 필요했을 것,,,)
+                */
+                this.setState({[_name] : _value});
+                console.log('myChangeHandler', this.state);
+            }
+
+            render(){
+                return (
+                    <form> 
+                        <h3>입력한값 : {this.state.movie} / {this.state.actor} </h3>
+                        <h4>{this.state.content}</h4>
+                        영화 : 
+                        <input type="text" name='movie' onChange={this.myChangeHandler}/>
+                        <br/>
+                        주연배우 : 
+                        <input type="text" name='actor' onChange={this.myChangeHandler}/>
+                        <br/>
+                        줄거리 : 
+                        <input type="text" name='content' onChange={this.myChangeHandler}/>
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(<MyForm5/>, document.getElementById('mydiv5'));
+    </script>
+</body>
+</html>

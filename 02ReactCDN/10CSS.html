@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <!-- 
+        JSX에서 Javascript 표현식은 중괄호 안에 쓰여지고 JSON객체도 중괄호를 
+        사용하기 때문에 스타일을 지정하기 위해서는 중괄호 두세트 {{}}를
+        사용해야 한다.
+     -->
+    <h2>인라인 스타일</h2>
+    <div id="myDiv1"></div>
+    <script type="text/babel">
+        class MyCSS1 extends React.Component {
+            render() {
+                return (
+                    <div>
+                        <h4 style={{color: "red"}}>Hello Style!</h4>
+                        <h4 style={{BackgroundColor: "lightblue"}}>콧수염괄호 써야함</h4>
+                        <p>React에서 CSS적용하는법</p>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<MyCSS1/>, document.getElementById('myDiv1'));
+    </script>
+
+
+    <h2>JSON을 사용하는 방법</h2>
+    <div id="myDiv2"></div>
+    <script type="text/babel">
+        class MyCSS2 extends React.Component {
+            render() {
+                //2개 이상의 속성을 지정할 때 JSON 객체를 사용한다.
+                const mystyle = {
+                    color: "white",
+                    backgroundColor: "DodgerBlue",
+                    padding: "10px",
+                    fontFamily: "Verdana"
+                };
+
+                return (
+                    <div>
+                        <h4 style={mystyle}>JSON으로 여러속성 한번에 지정하기</h4>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<MyCSS2/>, document.getElementById('myDiv2'));
+    </script>
+
+
+
+    <h2>외부 CSS파일을 사용하는 방법</h2>
+    <div id="myDiv3"></div>
+    <link rel="stylesheet" href="./css/my_style.css">
+    <script type="text/babel">
+        class MyCSS3 extends React.Component {
+            render() {
+                return (
+                    <div>
+                        <h4 id="my-style">외부 CSS파일 사용</h4>
+                        <p class="my-style">Add a little style!</p>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<MyCSS3/>, document.getElementById('myDiv3'));
+    </script>
+</body>
+</html>
