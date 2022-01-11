@@ -16,13 +16,13 @@
     -프로미스의 3가지 상태(state)
         Pending: 대기상태. 비동기 처리 로직이 완료되지 않은 상태
         Fulfilled: 이행상태. 비동기 처리가 완료되어 프로미스가 결과값을 반환해준 상태
-        Rejected: 실패상티. 비동기 처리가 실패하거나 오류가발생한 상태
+        Rejected: 실패상태. 비동기 처리가 실패하거나 오류가발생한 상태
  -->
     <script>
         function myGetData(callBackFunc){
             params = {};
             return new Promise(function(resolve,reject){
-                $.get('./myDataㅁ.txt', params, function(resData){
+                $.get('./myData.txt', params, function(resData){
                     if(resData) //이행상태가 되면 resolve()함수를 호출한다.
                         resolve(resData);
                     else //실패면 reject()함수를 호출한다.
