@@ -1,0 +1,14 @@
+.App{
+  margin:10px;
+}
+div{
+  border: 3px solid blue;
+  margin: 5px; 
+  padding: 5px;
+}
+
+.active{
+  background-color: yellowgreen;
+  text-decoration: none;
+  font-weight: bold;
+}

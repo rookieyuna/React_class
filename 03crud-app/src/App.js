@@ -75,7 +75,7 @@ class App extends Component{
     else if(this.state.mode==='create'){
       //create로 변경시 입력폼이 보인다.
       //자식 컴포넌트에서 폼값을 받기위해 onSubmitValue라는 props를 내려준다.
-      _article = <CreateForm onSubmitValue={function(_title, _desc){
+      _article = <CreateForm onSubmitValue={(_title, _desc)=>{
         console.log(_title, _desc);
 
         //일련번호 부여를 위해 +1 증가
@@ -91,7 +91,7 @@ class App extends Component{
           mode : 'read',
           selected_content_id : this.max_content_id
         });
-      }.bind(this)}></CreateForm>
+      }}></CreateForm>
     }
     else if(this.state.mode==='update'){
       /*
@@ -165,13 +165,13 @@ class App extends Component{
         {/* Navi컴포넌트로 state 변경 기능을 가진 함수를 props로 내려준다.
         자식은 해당 props를 호출하고, 이때 data-id로 지정된 값을 매개변수로 전달한다. */}
         <Navi data={this.state.contents}
-          onChangePage={function(id){
+          onChangePage={(id)=>{
             //alert("이벤트확인용(Navi)");
             this.setState({
               mode:'read',
               selected_content_id : Number(id)
             });
-          }.bind(this)}></Navi>
+          }}></Navi>
 
         <Buttons onChangeMode={function(btn_mode){
           //여기서 삭제처리를 하면 렌더링을 한번만해도 되므로 효율적
